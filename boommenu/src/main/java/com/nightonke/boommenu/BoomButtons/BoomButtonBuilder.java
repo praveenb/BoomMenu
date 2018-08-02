@@ -75,7 +75,7 @@ public abstract class BoomButtonBuilder<T> {
     int maxLines = 1;
     int textGravity = Gravity.CENTER;
     TextUtils.TruncateAt ellipsize = TextUtils.TruncateAt.MARQUEE;
-    int textSize = 10;
+    public int textSize = 10;
 
     // Sub text
     int subNormalTextRes = 0;
@@ -99,9 +99,9 @@ public abstract class BoomButtonBuilder<T> {
     int subTextSize = 10;
 
     // Text for text-outside-circle-button
-    int textTopMargin = Util.dp2px(5);
-    int textWidth = Util.dp2px(80);
-    int textHeight = Util.dp2px(20);
+    public int textTopMargin = Util.dp2px(5);
+    public int textWidth = Util.dp2px(80);
+    public int textHeight = Util.dp2px(20);
 
     // Button
     boolean rippleEffect = true;
