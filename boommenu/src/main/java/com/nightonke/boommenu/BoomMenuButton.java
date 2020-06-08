@@ -18,6 +18,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -666,20 +667,28 @@ public class BoomMenuButton extends FrameLayout implements InnerOnBoomButtonClic
     }
 
     private void startReboomAnimations(boolean immediately) {
-        ArrayList<Integer> indexes;
-        if (piecePlaceEnum == Share)
-            indexes = AnimationManager.getOrderIndex(OrderEnum.REVERSE, pieces.size());
-        else indexes = AnimationManager.getOrderIndex(orderEnum, pieces.size());
-        lastReboomIndex = indexes.get(indexes.size() - 1);
-        for (Integer index : indexes) boomButtons.get(index).bringToFront();
-        for (int i = 0; i < indexes.size(); i++) {
-            int index = indexes.get(i);
-            BoomButton boomButton = boomButtons.get(index);
-            PointF startPosition = new PointF(
-                    startPositions.get(index).x - boomButton.centerPoint.x,
-                    startPositions.get(index).y - boomButton.centerPoint.y);
-            startEachReboomAnimation( pieces.get(index), boomButton,
-                    endPositions.get(index), startPosition, i, immediately);
+        try {
+            ArrayList<Integer> indexes;
+            if (piecePlaceEnum == Share)
+                indexes = AnimationManager.getOrderIndex(OrderEnum.REVERSE, pieces.size());
+            else indexes = AnimationManager.getOrderIndex(orderEnum, pieces.size());
+            lastReboomIndex = indexes.get(indexes.size() - 1);
+            if(boomButtons!=null&&boomButtons.size()>0){
+                for (Integer index : indexes) boomButtons.get(index).bringToFront();
+                for (int i = 0; i < indexes.size(); i++) {
+                    int index = indexes.get(i);
+                    BoomButton boomButton = boomButtons.get(index);
+                    PointF startPosition = new PointF(
+                            startPositions.get(index).x - boomButton.centerPoint.x,
+                            startPositions.get(index).y - boomButton.centerPoint.y);
+                    startEachReboomAnimation( pieces.get(index), boomButton,
+                            endPositions.get(index), startPosition, i, immediately);
+                }
+            }else{
+                Log.e(TAG,"Handled IndexOutOfBoundsException => pvn");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
